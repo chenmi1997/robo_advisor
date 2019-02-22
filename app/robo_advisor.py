@@ -8,6 +8,10 @@ import requests
 import pandas as pd
 from dotenv import load_dotenv
 
+import datetime
+
+t = datetime.datetime.now()
+
 load_dotenv()
 
 # load_dotenv() #> loads contents of the .env file into the script's environment
@@ -35,11 +39,11 @@ while True:
 # "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=demo"
 #request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=" + API_KEY
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + stock_ticker + "&apikey=" + API_KEY
-print(request_url)
+# print(request_url)
 
 response = requests.get(request_url)
 
-print("RESPONSE STATUS: " + str(response.status_code))
+# print("RESPONSE STATUS: " + str(response.status_code))
 #print("RESPONSE TEXT: " + response.text)3. L
 
 parsed_response = json.loads(response.text)
@@ -56,6 +60,7 @@ latest_close = tsd[latest_day]["4. close"]
 # max of high prices
 high_prices = []
 low_prices = []
+close_prices = []
 
 for date in dates:
     high_price = tsd[date]["2. high"]
@@ -67,6 +72,16 @@ recent_high = max(high_prices)
 recent_low = min(low_prices)
 
 print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
+
+for date in dates:
+    close_price = tsd[date]["4. close"]
+    close_prices.append(float(close_price))
+
+mean_close = close_prices/len(close_prices)
+
+# def mean_close:
+  #  return 
+
 # > '1627.5800'
 
 
@@ -80,15 +95,21 @@ print("--------------------------------")
 print("SELECTED SYMBOL: " + stock_ticker)
 print("--------------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
+print("REQUEST AT: " + (t.strftime("%Y-%m-%d")) + " " + (t.strftime("%I:%M %p")))
 print("--------------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"THE LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("--------------------------------")
-print("RECOMMENDATION: BUY!") # TODO
-print("BECAUSE: TODO") # TODO
+
+#if float(recent_low)>float(mean_close): 
+ #   print("RECOMMENDATION: BUY")
+  #  print ("We should buy this stock because it is undervalued compared to historical values")
+#else:
+ #   print("RECOMMENDATION: SELL")
+  #  print ("We should sell this stock because it is overvalued compared to historical values")
+
 print("--------------------------------")
 print("HAPPY INVESTING") 
 print("--------------------------------")
