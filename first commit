@@ -22,8 +22,12 @@ print("RESPONSE STATUS: " + str(response.status_code))
 
 parsed_response = json.loads(response.text)
 
+tsd = parsed_response["Time Series (Daily)"] #> 'dict'
+
+latest_day = "2019-02-20" # TODO: make dynamic
+
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-latest_close = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"]
+latest_close = tsd[latest_day]["4. close"]
 
 print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
 # > '1627.5800'
@@ -39,7 +43,7 @@ print(f"THE LATEST CLOSE: {to_usd(float(latest_close))}")
 # BUT THE LATEST DAY WON'T ALWAYS BE "2019-02-19"
 # ... SO HERE'S A WAY TO GET THE LATEST DAY, WHATEVER IT IS
 #
-tsd = parsed_response["Time Series (Daily)"] #> 'dict'
+
 #
 # What keys or attributes does this dictionary have?
 # ... see: https://github.com/prof-rossetti/georgetown-opim-243-201901/blob/master/notes/python/datatypes/dictionaries.md
