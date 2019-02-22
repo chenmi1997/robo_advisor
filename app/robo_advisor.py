@@ -15,7 +15,7 @@ load_dotenv()
 def to_usd(my_price):
     return "${0:,.2f}".format(my_price)
 
-API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY")
+API_KEY = str(os.environ.get("ALPHAVANTAGE_API_KEY"))
 #print(API_KEY)
 
 while True:
@@ -77,7 +77,7 @@ print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
 # csv-mgmt/write_teams.py
 
 print("--------------------------------")
-print("SELECTED SYMBOL: MSFT")
+print("SELECTED SYMBOL: " + stock_ticker)
 print("--------------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT: 2018-02-20 02:00pm")
