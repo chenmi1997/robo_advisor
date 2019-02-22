@@ -1,21 +1,40 @@
 # goal: print the latest closing price
 
+import csv
 import json
 import os
+
 import requests
+import pandas as pd
 from dotenv import load_dotenv
+
+load_dotenv()
 
 # load_dotenv() #> loads contents of the .env file into the script's environment
 
 def to_usd(my_price):
     return "${0:,.2f}".format(my_price)
 
-# API_KEY = os.environ.get("MY_API_KEY")
+API_KEY = os.environ.get("ALPHAVANTAGE_API_KEY")
 #print(API_KEY)
+
+while True:
+	stock_ticker = input("Enter name of stock you want: ")
+	if not stock_ticker.isalpha():
+		print("Please make sure to enter name of stock price")
+	else:
+		data = requests.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + stock_ticker + "&apikey=" + API_KEY)
+
+		if "Error" in data.text:
+			print("The stock you are looking for is not here")
+		else:
+			break
+
+    # SHOUTOUT HIEP
 
 # "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=demo"
 #request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=" + API_KEY
-request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + stock_ticker + "&apikey=" + API_KEY
 print(request_url)
 
 response = requests.get(request_url)
@@ -47,8 +66,6 @@ for date in dates:
 recent_high = max(high_prices)
 recent_low = min(low_prices)
 
-
-
 print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
 # > '1627.5800'
 
@@ -56,6 +73,8 @@ print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
 #
 # INFO OUTPUTS
 #
+
+# csv-mgmt/write_teams.py
 
 print("--------------------------------")
 print("SELECTED SYMBOL: MSFT")
@@ -68,11 +87,21 @@ print(f"THE LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("--------------------------------")
-print("RECOMMENDATION: BUY!")
-print("BECAUSE: TODO")
+print("RECOMMENDATION: BUY!") # TODO
+print("BECAUSE: TODO") # TODO
 print("--------------------------------")
-print("HAPPY INVESTING")
+print("HAPPY INVESTING") 
 print("--------------------------------")
+
+csv_file_path = "prices.csv" # a relative filepath
+
+with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    writer.writeheader() # uses fieldnames set above
+    writer.writerow({"city": "New York", "name": "Yankees"})
+    writer.writerow({"city": "New York", "name": "Mets"})
+    writer.writerow({"city": "Boston", "name": "Red Sox"})
+    writer.writerow({"city": "New Haven", "name": "Ravens"})
 
 #
 # BUT THE LATEST DAY WON'T ALWAYS BE "2019-02-19"
@@ -90,4 +119,3 @@ print("--------------------------------")
 #
 # print(tsd[latest_day]["4. close"])
 # > '1627.5800'
-
