@@ -12,36 +12,28 @@ from dotenv import load_dotenv
 
 # "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=demo"
 #request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=" + API_KEY
-request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AMZN&apikey=demo"
+request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo"
 print(request_url)
 
 response = requests.get(request_url)
 
 print("RESPONSE STATUS: " + str(response.status_code))
-#print("RESPONSE TEXT: " + response.text)
+#print("RESPONSE TEXT: " + response.text)3. L
 
 parsed_response = json.loads(response.text)
 
-# breakpoint()
-# (pdb) type(parsed_response)
-#> <class 'dict'>
-#
-# (pdb) parsed_response.keys()
-#> dict_keys(['Meta Data', 'Time Series (Daily)'])
-#
-# (pdb) type(parsed_response["Time Series (Daily)"])
-#> <class 'dict'>
-#
-# (pdb) parsed_response["Time Series (Daily)"].keys()
-#> dict_keys(['2019-02-19', '2019-02-15', '2019-02-14' ... '2018-09-26', '2018-09-25'])
-#
-# (pdb) parsed_response["Time Series (Daily)"]["2019-02-19"]
-#> {'1. open': '1601.0000', '2. high': '1634.0000', '3. low': '1601.0000', '4. close': '1627.5800', '5. volume': '3673878'}
+last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
+latest_close = parsed_response["Time Series (Daily)"]["2019-02-20"]["4. close"]
 
 print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
 # > '1627.5800'
 
-print("THE LATEST CLOSING PRICE IS: $XYZ.00")
+def to_usd(my_price):
+    return "${0:,.2f}".format(my_price)
+
+
+print(f"LATEST DAY: {last_refreshed}")
+print(f"THE LATEST CLOSE: {to_usd(float(latest_close))}")
 
 #
 # BUT THE LATEST DAY WON'T ALWAYS BE "2019-02-19"
@@ -57,6 +49,8 @@ day_keys = tsd.keys() #> 'dict_keys' of all the day values
 days = list(day_keys) #> 'list' of all the day values
 print(days[0]) # 'str' of the latest day!
 latest_day = days[0] #> '2019-02-19'
+
+print("-----------------------------")
 #
 print(parsed_response["Time Series (Daily)"][latest_day]["4. close"])
 # > '1627.5800'
