@@ -77,7 +77,8 @@ for date in dates:
     close_price = tsd[date]["4. close"]
     close_prices.append(float(close_price))
 
-mean_close = close_prices/len(close_prices)
+mean_close = sum(close_prices)/len(close_prices)
+print(mean_close)
 
 # def mean_close:
   #  return 
@@ -103,12 +104,12 @@ print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("--------------------------------")
 
-#if float(recent_low)>float(mean_close): 
- #   print("RECOMMENDATION: BUY")
-  #  print ("We should buy this stock because it is undervalued compared to historical values")
-#else:
- #   print("RECOMMENDATION: SELL")
-  #  print ("We should sell this stock because it is overvalued compared to historical values")
+if float(recent_low)>float(mean_close): 
+    print("RECOMMENDATION: BUY")
+    print ("We should buy this stock because it is undervalued compared to historical values")
+else:
+    print("RECOMMENDATION: SELL")
+    print ("We should sell this stock because it is overvalued compared to historical values")
 
 print("--------------------------------")
 print("HAPPY INVESTING") 
