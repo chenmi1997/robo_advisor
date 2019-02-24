@@ -71,14 +71,14 @@ for date in dates:
 recent_high = max(high_prices)
 recent_low = min(low_prices)
 
-print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
+# print(parsed_response["Time Series (Daily)"]["2019-02-19"]["4. close"])
 
 for date in dates:
     close_price = tsd[date]["4. close"]
     close_prices.append(float(close_price))
 
 mean_close = sum(close_prices)/len(close_prices)
-print(mean_close)
+# print(mean_close)
 
 # def mean_close:
   #  return 
@@ -102,14 +102,15 @@ print(f"LATEST DAY: {last_refreshed}")
 print(f"THE LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
+print(f"RUNNING 15 DAY AVG: {to_usd(float(mean_close))}")
 print("--------------------------------")
 
-if float(recent_low)>float(mean_close): 
+if float(mean_close)>float(latest_close): 
     print("RECOMMENDATION: BUY")
-    print ("We should buy this stock because it is undervalued compared to historical values")
+    print ("We should buy this stock because its latest closing price is lower than its running 15-day average")
 else:
     print("RECOMMENDATION: SELL")
-    print ("We should sell this stock because it is overvalued compared to historical values")
+    print ("We should sell this stock because its latest closing price is higher than its running 15-day average")
 
 print("--------------------------------")
 print("HAPPY INVESTING") 
