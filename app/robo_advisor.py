@@ -96,12 +96,12 @@ print("--------------------------------")
 print("SELECTED SYMBOL: " + stock_ticker)
 print("--------------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: " + (t.strftime("%Y-%m-%d")) + " " + (t.strftime("%I:%M %p")))
+print("REQUESTED AT: " + (t.strftime("%I:%M %p") + " ON " + (t.strftime("%Y-%m-%d"))))
+print(f"LAST REFRESHED: {last_refreshed}")
 print("--------------------------------")
-print(f"LATEST DAY: {last_refreshed}")
-print(f"THE LATEST CLOSE: {to_usd(float(latest_close))}")
-print(f"RECENT HIGH: {to_usd(float(recent_high))}")
-print(f"RECENT LOW: {to_usd(float(recent_low))}")
+print(f"LATEST CLOSING PRICE: {to_usd(float(latest_close))}")
+print(f"RECENT HIGH PRICE: {to_usd(float(recent_high))}")
+print(f"RECENT LOW PRICE: {to_usd(float(recent_low))}")
 print(f"RUNNING 15 DAY AVG: {to_usd(float(mean_close))}")
 print("--------------------------------")
 
@@ -116,15 +116,16 @@ print("--------------------------------")
 print("HAPPY INVESTING") 
 print("--------------------------------")
 
-csv_file_path = "prices.csv" # a relative filepath
+# csv_file_path = "prices.csv" # a relative filepath
 
-with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
-    writer.writeheader() # uses fieldnames set above
-    writer.writerow({"city": "New York", "name": "Yankees"})
-    writer.writerow({"city": "New York", "name": "Mets"})
-    writer.writerow({"city": "Boston", "name": "Red Sox"})
-    writer.writerow({"city": "New Haven", "name": "Ravens"})
+# with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+  #  writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+  #  writer.writeheader() # uses fieldnames set above
+  #  writer.writerow({"city": "New York", "name": "Yankees"})
+  #  writer.writerow({"city": "New York", "name": "Mets"})
+  #  writer.writerow({"city": "Boston", "name": "Red Sox"})
+  #  writer.writerow({"city": "New Haven", "name": "Ravens"})
+# WASN'T EXACTLY SURE WHAT YOU WANTED TO DO WITH THE CSV TEMPLATE THAT YOU SHOWED IN WEBCAST SO JUST COMMENTED IT OUT...THANKS
 
 #
 # BUT THE LATEST DAY WON'T ALWAYS BE "2019-02-19"
