@@ -19,6 +19,7 @@ load_dotenv()
 def to_usd(my_price):
     return "${0:,.2f}".format(my_price)
 
+
 API_KEY = str(os.environ.get("ALPHAVANTAGE_API_KEY"))
 #print(API_KEY)
 
@@ -86,10 +87,12 @@ output = pnd.DataFrame(
     }
 )
 
-
 # deletes a file if it is named in the same way (the data would essentially be the same)
 
 os.path.join(os.path.dirname(__file__), "..")
+# https://stackoverflow.com/questions/9271464/what-does-the-file-variable-mean-do
+
+
 while True:
     if os.path.isfile("data/" + stock_ticker + "_" + date + ".csv"):
         os.remove("data/" + stock_ticker + "_" + date + ".csv")
@@ -126,30 +129,3 @@ print("--------------------------------")
 print("HAPPY INVESTING") 
 print("--------------------------------")
 
-# csv_file_path = "prices.csv" # a relative filepath
-
-# with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
-  #  writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
-  #  writer.writeheader() # uses fieldnames set above
-  #  writer.writerow({"city": "New York", "name": "Yankees"})
-  #  writer.writerow({"city": "New York", "name": "Mets"})
-  #  writer.writerow({"city": "Boston", "name": "Red Sox"})
-  #  writer.writerow({"city": "New Haven", "name": "Ravens"})
-# WASN'T EXACTLY SURE WHAT YOU WANTED TO DO WITH THE CSV TEMPLATE THAT YOU SHOWED IN WEBCAST SO JUST COMMENTED IT OUT...THANKS
-
-#
-# BUT THE LATEST DAY WON'T ALWAYS BE "2019-02-19"
-# ... SO HERE'S A WAY TO GET THE LATEST DAY, WHATEVER IT IS
-#
-
-#
-# What keys or attributes does this dictionary have?
-# ... see: https://github.com/prof-rossetti/georgetown-opim-243-201901/blob/master/notes/python/datatypes/dictionaries.md
-
-
-#
-# print(parsed_response["Time Series (Daily)"][latest_day]["4. close"])
-# > '1627.5800'
-#
-# print(tsd[latest_day]["4. close"])
-# > '1627.5800'
