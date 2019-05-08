@@ -4,9 +4,10 @@ import csv
 import json
 import os
 
-import requests
+
 import pandas as pd
 from dotenv import load_dotenv
+import requests
 
 import datetime
 
@@ -133,4 +134,5 @@ if __name__ == "__main__":
     print("--------------------------------")
     print("HAPPY INVESTING") 
     print("--------------------------------")
+
 
